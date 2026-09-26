@@ -18,11 +18,11 @@ No package installation is required. The project uses Node 24's built-in SQLite 
 
 ## Deploy on Render
 
-The repository includes a `render.yaml` Blueprint for a Node web service with a 1 GB persistent disk. The disk stores both the SQLite database and administrator-uploaded photos between deploys. Render requires a paid web service for persistent disks; review the current [Render pricing](https://render.com/pricing) before creating the service.
+The repository includes a `render.yaml` Blueprint for a free Node web service. Render's free service has an ephemeral filesystem and can spin down when idle. The SQLite database and administrator-uploaded photos can be lost on restarts or deploys, so this free setup is suitable for a preview rather than dependable live orders. See Render's [free service limits](https://render.com/docs/free).
 
 1. In Render, create a new Blueprint and connect `govindtech-official/Sports-World`.
 2. Set the prompted `FIRST_SUPERADMIN_PASSWORD` to a unique password of at least 10 characters. The initial super admin email is `contactgovindtech@gmail.com`.
-3. Review the paid service and disk charges, then create the Blueprint. Render will build from the `main` branch and redeploy on future pushes.
+3. Confirm the service plan is **Free**, then create the Blueprint. Render will build from the `main` branch and redeploy on future pushes.
 
 Do not put deployment passwords or other secrets in GitHub. Set them in Render's environment settings.
 

@@ -2,21 +2,17 @@ services:
   - type: web
     name: sports-world
     runtime: node
-    plan: 0.5c-512mb
+    plan: free
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /
-    disk:
-      name: sports-world-data
-      mountPath: /opt/render/project/src/uploads
-      sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: 24.21.0
       - key: NODE_ENV
         value: production
       - key: DATABASE_PATH
-        value: /opt/render/project/src/uploads/sports-world.db
+        value: /opt/render/project/src/data/sports-world.db
       - key: FIRST_SUPERADMIN_EMAIL
         value: contactgovindtech@gmail.com
       - key: FIRST_SUPERADMIN_PASSWORD
