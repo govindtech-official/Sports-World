@@ -45,6 +45,10 @@ The shop name and address live in `server.js` under `config`. The supplied logo 
 
 Log in with the first super admin account and select **Admin Panel**. The super-admin panel is grouped into expandable sections. The Products & stock section adds products and records each stock adjustment with the previous quantity, new quantity, reason, user, and timestamp. The Coupons and Admin accounts sections only appear for a super admin. Customer activity reports export account/login totals, successful login history, and product views as UTF-8 CSV files that open in Excel. Login history begins at deployment; product views are recorded only for signed-in customers when at least half of a product card is visible, at most once per customer/product per day. These reports omit IP addresses and passwords.
 
+## Android admin app
+
+Open `https://sports-world-xe7d.onrender.com/admin-app` in Android Chrome and sign in with an admin or super-admin account. Use **Install app** or Chrome's **⋮ → Install app / Add to Home screen** menu. The app opens directly to the admin panel; customer accounts cannot enter it. It is an installable Android web app (PWA), not a Play Store APK. Private API responses are never cached by the service worker, so store management requires an internet connection.
+
 ## Demo inventory
 
 The initial catalog uses clearly marked demo products. Archive them in **Admin Panel → Products & stock** once live inventory is added. Product creation accepts up to eight PNG, JPEG, or WebP photos (4 MB each). Use **Admin Panel → Store photos** to change the homepage hero photo or add images to the shop gallery. Removing a photo hides it from the storefront while keeping its uploaded file on disk.
