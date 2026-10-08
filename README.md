@@ -43,7 +43,7 @@ The shop name and address live in `server.js` under `config`. The supplied logo 
 - `admin`: manages products and stock.
 - `superadmin`: creates admins and super admins, plus creates coupons.
 
-Log in with the first super admin account and select **Admin Panel**. The Products & stock tab adds products and records each stock adjustment with the previous quantity, new quantity, reason, user, and timestamp. The Coupons and Admins tabs only appear for a super admin.
+Log in with the first super admin account and select **Admin Panel**. The super-admin panel is grouped into expandable sections. The Products & stock section adds products and records each stock adjustment with the previous quantity, new quantity, reason, user, and timestamp. The Coupons and Admin accounts sections only appear for a super admin. Customer activity reports export account/login totals, successful login history, and product views as UTF-8 CSV files that open in Excel. Login history begins at deployment; product views are recorded only for signed-in customers when at least half of a product card is visible, at most once per customer/product per day. These reports omit IP addresses and passwords.
 
 ## Demo inventory
 
@@ -51,4 +51,4 @@ The initial catalog uses clearly marked demo products. Archive them in **Admin P
 
 ## Deployment notes
 
-Run behind HTTPS with `NODE_ENV=production` so session cookies use the `Secure` flag. Keep `data/` and `uploads/` on persistent storage. Put the application behind a Node-compatible host that supports persistent disk, then set `PORT` to the host-provided port.
+Run behind HTTPS with `NODE_ENV=production` so session cookies use the `Secure` flag. Keep `data/` and `uploads/` on persistent storage. Render Free web services have ephemeral filesystems, so their local SQLite database, uploads, and activity reports are lost on redeploy, restart, or spin-down. Use persistent storage or a persistent database before relying on the live site's inventory and customer reports. Then set `PORT` to the host-provided port.
