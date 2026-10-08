@@ -4,8 +4,8 @@ Sports World is a server-backed sports store built with Node.js and SQLite. Prod
 
 ## Run locally
 
-1. Copy `.env.example` to `.env` and replace the example values.
-2. Set `FIRST_SUPERADMIN_EMAIL` and `FIRST_SUPERADMIN_PASSWORD` before the first start. This creates the initial super admin only when no super admin exists.
+1. Copy `.env.example` to `.env` and set your Google OAuth client ID, client secret, redirect URI, and `FIRST_SUPERADMIN_EMAIL`.
+2. Set `FIRST_SUPERADMIN_EMAIL` to the Google-verified email that should own the super-admin account. The server seeds that account with a random, unusable password; it can sign in only through Google.
 3. Start the store:
 
    ```powershell
@@ -21,10 +21,10 @@ No package installation is required. The project uses Node 24's built-in SQLite 
 The repository includes a `render.yaml` Blueprint for a free Node web service. Render's free service has an ephemeral filesystem and can spin down when idle. The SQLite database and administrator-uploaded photos can be lost on restarts or deploys, so this free setup is suitable for a preview rather than dependable live orders. See Render's [free service limits](https://render.com/docs/free).
 
 1. In Render, create a new Blueprint and connect `govindtech-official/Sports-World`.
-2. Set the prompted `FIRST_SUPERADMIN_PASSWORD` to a unique password of at least 10 characters. The initial super admin email is `contactgovindtech@gmail.com`.
+2. In Google Cloud, create a Web application OAuth client and add `https://sports-world-xe7d.onrender.com/auth/google/callback` as an authorized redirect URI. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in Render Environment; keep the initial super-admin email set to `contactgovindtech@gmail.com`.
 3. Confirm the service plan is **Free**, then create the Blueprint. Render will build from the `main` branch and redeploy on future pushes.
 
-Do not put deployment passwords or other secrets in GitHub. Set them in Render's environment settings.
+Set OAuth secrets only in Render Environment (or local .env); never commit the client secret. Super admins create admin accounts using each person's Google email, and that exact verified email is required to enter the admin panel.
 
 ## Store contact settings
 
@@ -43,11 +43,11 @@ The shop name and address live in `server.js` under `config`. The supplied logo 
 - `admin`: manages products and stock.
 - `superadmin`: creates admins and super admins, plus creates coupons.
 
-Log in with the first super admin account and select **Admin Panel**. The super-admin panel is grouped into expandable sections. The Products & stock section adds products and records each stock adjustment with the previous quantity, new quantity, reason, user, and timestamp. The Coupons and Admin accounts sections only appear for a super admin. Customer activity reports export account/login totals, successful login history, and product views as UTF-8 CSV files that open in Excel. Login history begins at deployment; product views are recorded only for signed-in customers when at least half of a product card is visible, at most once per customer/product per day. These reports omit IP addresses and passwords.
+Sign in with Google using the first super admin email and select **Admin Panel**. The super-admin panel is grouped into expandable sections. The Products & stock section adds products and records each stock adjustment with the previous quantity, new quantity, reason, user, and timestamp. The Coupons and Admin accounts sections only appear for a super admin. Customer activity reports export account/login totals, successful login history, and product views as UTF-8 CSV files that open in Excel. Login history begins at deployment; product views are recorded only for signed-in customers when at least half of a product card is visible, at most once per customer/product per day. These reports omit IP addresses and passwords.
 
 ## Android admin app
 
-Open `https://sports-world-xe7d.onrender.com/admin-app` in Android Chrome and sign in with an admin or super-admin account. Use **Install app** or Chrome's **⋮ → Install app / Add to Home screen** menu. The app opens directly to the admin panel; customer accounts cannot enter it. It is an installable Android web app (PWA), not a Play Store APK. Private API responses are never cached by the service worker, so store management requires an internet connection.
+Open `https://sports-world-xe7d.onrender.com/admin-app` in Android Chrome and sign in with the Google email assigned an admin or super-admin role. Use **Install app** or Chrome's **⋮ → Install app / Add to Home screen** menu. The app opens directly to the admin panel; customer accounts cannot enter it. It is an installable Android web app (PWA), not a Play Store APK. Private API responses are never cached by the service worker, so store management requires an internet connection.
 
 ## Demo inventory
 

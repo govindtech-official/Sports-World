@@ -15,5 +15,9 @@ services:
         value: /opt/render/project/src/data/sports-world.db
       - key: FIRST_SUPERADMIN_EMAIL
         value: contactgovindtech@gmail.com
-      - key: FIRST_SUPERADMIN_PASSWORD
+      - key: GOOGLE_CLIENT_ID
         sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        value: https://sports-world-xe7d.onrender.com/auth/google/callback
