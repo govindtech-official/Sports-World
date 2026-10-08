@@ -35,7 +35,7 @@ OWNER_PHONE_NUMBER=your-number
 SHOP_INSTAGRAM_HANDLE=your-instagram-handle
 ```
 
-The shop name and address live in `server.js` under `config`. The supplied logo and storefront image are in `assets/`. The application displays Thai baht; product prices and coupon amounts entered in the admin panel use satang (100 satang = ฿1).
+The shop name and address live in `server.js` under `config`. The supplied logo and storefront image are in `assets/`. The application displays Indian rupees; product prices and fixed coupon amounts entered in the admin panel use paise (100 paise = ₹1).
 
 ## Admin roles
 
