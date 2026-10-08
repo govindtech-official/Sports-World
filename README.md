@@ -21,7 +21,7 @@ No package installation is required. The project uses Node 24's built-in SQLite 
 The repository includes a `render.yaml` Blueprint for a free Node web service. Render's free service has an ephemeral filesystem and can spin down when idle. The SQLite database and administrator-uploaded photos can be lost on restarts or deploys, so this free setup is suitable for a preview rather than dependable live orders. See Render's [free service limits](https://render.com/docs/free).
 
 1. In Render, create a new Blueprint and connect `govindtech-official/Sports-World`.
-2. In Google Cloud, create a Web application OAuth client and add `https://sports-world-xe7d.onrender.com/auth/google/callback` as an authorized redirect URI. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in Render Environment; keep the initial super-admin email set to `contactgovindtech@gmail.com`.
+2. In Google Cloud, create a Web application OAuth client and add `https://sportsworld.kiitgotlatent.com/auth/google/callback` as an authorized redirect URI. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in Render Environment; keep the initial super-admin email set to `contactgovindtech@gmail.com`.
 3. Confirm the service plan is **Free**, then create the Blueprint. Render will build from the `main` branch and redeploy on future pushes.
 
 Set OAuth secrets only in Render Environment (or local .env); never commit the client secret. Super admins create admin accounts using each person's Google email, and that exact verified email is required to enter the admin panel.
