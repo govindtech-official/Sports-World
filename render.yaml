@@ -14,7 +14,7 @@ services:
       - key: DATABASE_PATH
         value: /opt/render/project/src/data/sports-world.db
       - key: FIRST_SUPERADMIN_EMAIL
-        value: contactgovindtech@gmail.com
+        sync: false
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: GOOGLE_CLIENT_SECRET
