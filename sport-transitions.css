@@ -1,0 +1,63 @@
+/* Sport intro animations: a full-screen scene plays when a sport is opened */
+.sport-transition{--st-delay:.2s;--st-dur:1s;position:fixed;inset:0;z-index:1000;overflow:hidden;cursor:pointer;background:radial-gradient(ellipse at 50% 68%,#1f5c38 0,#0c2215 55%,#050d08 100%);clip-path:circle(0px at var(--cx,50%) var(--cy,50%));animation:st-enter .3s cubic-bezier(.6,0,.3,1) forwards}
+.sport-transition:before{content:"";position:absolute;inset:-20%;background:repeating-linear-gradient(115deg,transparent 0 70px,#ffffff07 70px 72px);animation:st-drift 1.6s linear both}
+.sport-transition.st-leave{clip-path:none;animation:st-leave .4s cubic-bezier(.7,0,.3,1) forwards}
+.st-scene{position:absolute;inset:0;width:100%;height:100%;animation:st-shake .14s linear calc(var(--st-delay) + var(--st-dur) * .4) 2}
+.st-scene .st-anim{animation-duration:var(--st-dur);animation-delay:var(--st-delay);animation-timing-function:linear;animation-fill-mode:both}
+.st-striker{transform-box:view-box;transform-origin:var(--px) var(--py);animation-name:st-swing}
+.st-impact{transform-box:fill-box;transform-origin:center;animation-name:st-impact}
+.st-word{font:900 84px var(--display);letter-spacing:2px;fill:var(--lime);paint-order:stroke;stroke:#07130c;stroke-width:12px;stroke-linejoin:round;transform-box:fill-box;transform-origin:center;animation-name:st-word}
+.st-bat-text{font:800 30px var(--display);fill:#fff}
+.st-ghost{opacity:.32}.st-ghost.g2{opacity:.14}
+.st-scene .st-ghost{animation-delay:calc(var(--st-delay) + 35ms)}.st-scene .st-ghost.g2{animation-delay:calc(var(--st-delay) + 70ms)}
+.st-label{position:absolute;left:6vw;bottom:9vh;color:#fff;font-family:var(--display);line-height:.86;pointer-events:none}
+.st-label span{display:block;font-size:clamp(13px,1.5vw,19px);font-weight:800;letter-spacing:4px;color:var(--lime);animation:st-label-in .45s cubic-bezier(.2,.8,.2,1) calc(var(--st-delay) + var(--st-dur) * .42) both}
+.st-label strong{display:block;font-size:clamp(64px,13vw,190px);font-weight:900;font-style:italic;text-shadow:0 10px 0 #0004;animation:st-label-in .5s cubic-bezier(.2,.8,.2,1) calc(var(--st-delay) + var(--st-dur) * .42 + 60ms) both}
+.st-skip{position:absolute;right:22px;top:20px;font:700 11px var(--body);letter-spacing:1.5px;color:#ffffff80}
+
+@keyframes st-enter{to{clip-path:circle(160vmax at var(--cx,50%) var(--cy,50%))}}
+@keyframes st-leave{to{transform:translateY(-102%)}}
+@keyframes st-drift{to{transform:translateX(-140px)}}
+@keyframes st-shake{25%{transform:translate(7px,-4px)}50%{transform:translate(-6px,3px)}75%{transform:translate(3px,5px)}}
+@keyframes st-swing{0%,24%{transform:rotate(var(--r0));animation-timing-function:cubic-bezier(.55,0,.85,.4)}40%{transform:rotate(var(--r1));animation-timing-function:cubic-bezier(.15,.75,.35,1)}75%,100%{transform:rotate(var(--r2))}}
+@keyframes st-impact{0%,39%{transform:scale(0);opacity:0}41%{transform:scale(.45);opacity:1}62%,100%{transform:scale(1.6);opacity:0}}
+@keyframes st-word{0%,41%{transform:scale(0) rotate(-14deg);opacity:0}50%{transform:scale(1.25) rotate(-6deg);opacity:1}58%,88%{transform:scale(1) rotate(-6deg);opacity:1}100%{transform:scale(1.04) rotate(-6deg);opacity:0}}
+@keyframes st-label-in{from{transform:translateX(-50px) skewX(-12deg);opacity:0}to{transform:none;opacity:1}}
+
+/* Cricket: the ball pitches, meets the bat, and sails away for six */
+.st-cricket .st-ball{animation-name:st-cricket-ball}
+@keyframes st-cricket-ball{0%{transform:translate(-80px,420px) scale(.8) rotate(0);animation-timing-function:cubic-bezier(.5,0,1,.6)}24%{transform:translate(560px,735px) scale(.95) rotate(300deg);animation-timing-function:cubic-bezier(0,.4,.6,1)}40%{transform:translate(795px,609px) scale(1) rotate(480deg);animation-timing-function:cubic-bezier(.12,.7,.3,1)}100%{transform:translate(140px,-200px) scale(2.1) rotate(1400deg)}}
+
+/* Football: the boot strikes a still ball into the net */
+.st-football .st-ball{animation-name:st-football-ball}
+.st-football .st-word{animation-delay:calc(var(--st-delay) + var(--st-dur) * .3)}
+.st-football .st-net{transform-box:fill-box;transform-origin:center;animation-name:st-net}
+@keyframes st-football-ball{0%,40%{transform:translate(870px,656px) rotate(0);animation-timing-function:cubic-bezier(.1,.6,.3,1)}72%{transform:translate(1170px,470px) scale(.72) rotate(540deg);animation-timing-function:ease-in}100%{transform:translate(1180px,640px) scale(.7) rotate(620deg)}}
+@keyframes st-net{0%,70%{transform:none}76%{transform:translateX(16px) scale(1.05)}88%{transform:translateX(-4px)}100%{transform:none}}
+
+/* Basketball: a long arc that drops clean through the hoop */
+.st-basketball .st-ball{animation-name:st-basketball-ball}
+.st-basketball .st-net{transform-box:fill-box;transform-origin:top center;animation-name:st-swish}
+@keyframes st-basketball-ball{0%{transform:translate(260px,980px) rotate(0);animation-timing-function:cubic-bezier(.2,.6,.5,1)}30%{transform:translate(760px,130px) rotate(-200deg);animation-timing-function:cubic-bezier(.5,0,.9,.6)}40%{transform:translate(960px,392px) rotate(-280deg)}55%{transform:translate(962px,560px) rotate(-320deg);animation-timing-function:ease-in}100%{transform:translate(990px,1000px) rotate(-420deg)}}
+@keyframes st-swish{0%,40%{transform:none}48%{transform:scale(.85,1.28)}62%{transform:scale(1.04,.94)}75%,100%{transform:none}}
+
+/* Badminton: an overhead smash sends the shuttle down hard */
+.st-badminton .st-ball{animation-name:st-badminton-shuttle}
+@keyframes st-badminton-shuttle{0%{transform:translate(260px,-60px) rotate(40deg);animation-timing-function:cubic-bezier(.4,0,1,.7)}40%{transform:translate(871px,414px) rotate(40deg)}41%{transform:translate(866px,417px) rotate(154deg);animation-timing-function:cubic-bezier(.1,.7,.3,1)}100%{transform:translate(-120px,880px) rotate(154deg)}}
+
+/* Tennis: the ball bounces in and is driven back across court */
+.st-tennis .st-ball{animation-name:st-tennis-ball}
+@keyframes st-tennis-ball{0%{transform:translate(-60px,260px) rotate(0);animation-timing-function:cubic-bezier(.5,0,1,.6)}22%{transform:translate(560px,690px) rotate(220deg);animation-timing-function:cubic-bezier(0,.4,.6,1)}40%{transform:translate(927px,366px) rotate(400deg);animation-timing-function:cubic-bezier(.1,.7,.3,1)}100%{transform:translate(-120px,80px) scale(1.4) rotate(1100deg)}}
+
+/* Volleyball: a set ball is spiked over the net */
+.st-volleyball .st-ball{animation-name:st-volleyball-ball}
+@keyframes st-volleyball-ball{0%{transform:translate(380px,960px) rotate(0);animation-timing-function:cubic-bezier(.2,.6,.5,1)}30%{transform:translate(760px,120px) rotate(160deg);animation-timing-function:ease-in}40%{transform:translate(800px,175px) rotate(200deg);animation-timing-function:cubic-bezier(.2,.8,.3,1)}62%{transform:translate(420px,780px) rotate(520deg);animation-timing-function:ease-out}100%{transform:translate(-80px,560px) rotate(700deg)}}
+
+/* Page and product motion across the store */
+.page.active{animation:page-in .5s cubic-bezier(.2,.7,.2,1) backwards}
+.product-grid>.product-card{animation:card-in .55s cubic-bezier(.2,.7,.2,1) backwards}
+.product-grid>.product-card:nth-child(2){animation-delay:.05s}.product-grid>.product-card:nth-child(3){animation-delay:.1s}.product-grid>.product-card:nth-child(4){animation-delay:.15s}.product-grid>.product-card:nth-child(5){animation-delay:.2s}.product-grid>.product-card:nth-child(6){animation-delay:.25s}.product-grid>.product-card:nth-child(7){animation-delay:.3s}.product-grid>.product-card:nth-child(n+8){animation-delay:.35s}
+@keyframes page-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes card-in{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+
+@media(prefers-reduced-motion:reduce){.sport-transition{display:none}.page.active,.product-grid>.product-card{animation:none}}

@@ -1,10 +1,12 @@
-const CACHE_NAME = 'sports-world-admin-shell-v1';
+const CACHE_NAME = 'sports-world-admin-shell-v2';
 const APP_SHELL = [
   '/admin-app',
   '/admin.webmanifest',
   '/styles.css',
   '/features.css',
   '/script.js',
+  '/sport-transitions.js',
+  '/sport-transitions.css',
   '/assets/admin-icon-192.png',
   '/assets/admin-icon-512.png',
   '/assets/sports-world-logo-source.png'
