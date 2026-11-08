@@ -1,30 +1,41 @@
 # Sports World
 
-Sports World is a server-backed sports store built with Node.js and SQLite. Product, cart, order, stock, user, admin, coupon, and custom jersey design data is stored in `data/sports-world.db` when the application runs.
+Sports World is a server-backed sports store built with Node.js and MongoDB. Product, cart, order, stock, user, admin, coupon, and custom jersey design data is stored in MongoDB, along with uploaded product photos, jersey previews, and payment screenshots, so nothing is lost when the server restarts or redeploys.
+
+## Database
+
+The store needs a MongoDB replica set, because orders and stock changes use transactions. A free MongoDB Atlas **M0** cluster works:
+
+1. Create an M0 cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas).
+2. Under **Database Access**, add a database user with a password.
+3. Under **Network Access**, allow `0.0.0.0/0`. Render's free plan has no fixed outbound IP address.
+4. Copy the cluster's `mongodb+srv://` connection string, put the user's password in it, and set it as `MONGODB_URI`.
+
+`MONGODB_DB` picks the database name (default `sports_world`); use a different name such as `sports_world_dev` for local development. On first start the server creates its indexes and the demo catalog. The free tier holds 512 MB, and each uploaded image is at most 4 MB.
 
 ## Run locally
 
-1. Copy `.env.example` to `.env` and set your Google OAuth client ID, client secret, redirect URI, and `FIRST_SUPERADMIN_EMAIL`.
-2. Set `FIRST_SUPERADMIN_EMAIL` to the Google-verified email that should own the super-admin account. The server seeds that account with a random, unusable password; it can sign in only through Google.
-3. Start the store:
+1. Copy `.env.example` to `.env` and set `MONGODB_URI`, your Google OAuth client ID, client secret, redirect URI, and `FIRST_SUPERADMIN_EMAIL`.
+2. Set `FIRST_SUPERADMIN_EMAIL` to the Google-verified email that should own the super-admin account. That account signs in only through Google.
+3. Install dependencies and start the store:
 
    ```powershell
+   npm install
    npm run dev
    ```
 
 4. Open `http://localhost:3000`.
 
-No package installation is required. The project uses Node 24's built-in SQLite runtime.
-
 ## Deploy on Render
 
-The repository includes a `render.yaml` Blueprint for a free Node web service. Render's free service has an ephemeral filesystem and can spin down when idle. The SQLite database and administrator-uploaded photos can be lost on restarts or deploys, so this free setup is suitable for a preview rather than dependable live orders. See Render's [free service limits](https://render.com/docs/free).
+The repository includes a `render.yaml` Blueprint for a free Node web service. Render's free service can spin down when idle, but all store data lives in MongoDB, so restarts and deploys keep it. See Render's [free service limits](https://render.com/docs/free).
 
 1. In Render, create a new Blueprint and connect `govindtech-official/Sports-World`.
 2. In Google Cloud, create a Web application OAuth client and add `https://sportsworld.kiitgotlatent.com/auth/google/callback` as an authorized redirect URI. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in Render Environment, and set `FIRST_SUPERADMIN_EMAIL` to the Google email that should own the store.
-3. Confirm the service plan is **Free**, then create the Blueprint. Render will build from the `main` branch and redeploy on future pushes.
+3. Set `MONGODB_URI` in Render Environment to your Atlas connection string.
+4. Confirm the service plan is **Free**, then create the Blueprint. Render will build from the `main` branch and redeploy on future pushes.
 
-Set OAuth secrets only in Render Environment (or local .env); never commit the client secret. Super admins create admin accounts using each person's Google email, and that exact verified email is required to enter the admin panel.
+Set OAuth secrets and the MongoDB connection string only in Render Environment (or local .env); never commit them. Super admins create admin accounts using each person's Google email, and that exact verified email is required to enter the admin panel.
 
 ## Store contact settings
 
@@ -51,8 +62,8 @@ Open `https://sports-world-xe7d.onrender.com/admin-app` in Android Chrome and si
 
 ## Demo inventory
 
-The initial catalog uses clearly marked demo products. Archive them in **Admin Panel → Products & stock** once live inventory is added. Product creation accepts up to eight PNG, JPEG, or WebP photos (4 MB each). Use **Admin Panel → Store photos** to change the homepage hero photo or add images to the shop gallery. Removing a photo hides it from the storefront while keeping its uploaded file on disk.
+The initial catalog uses clearly marked demo products. Archive them in **Admin Panel → Products & stock** once live inventory is added. Product creation accepts up to eight PNG, JPEG, or WebP photos (4 MB each). Use **Admin Panel → Store photos** to change the homepage hero photo or add images to the shop gallery. Removing a photo hides it from the storefront while keeping its uploaded file in the database.
 
 ## Deployment notes
 
-Run behind HTTPS with `NODE_ENV=production` so session cookies use the `Secure` flag. Keep `data/` and `uploads/` on persistent storage. Render Free web services have ephemeral filesystems, so their local SQLite database, uploads, and activity reports are lost on redeploy, restart, or spin-down. Use persistent storage or a persistent database before relying on the live site's inventory and customer reports. Then set `PORT` to the host-provided port.
+Run behind HTTPS with `NODE_ENV=production` so session cookies use the `Secure` flag, set `MONGODB_URI`, and set `PORT` to the host-provided port.
